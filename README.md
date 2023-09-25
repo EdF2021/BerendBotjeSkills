@@ -1,6 +1,10 @@
-<h1 align="center">
-📖KnowledgeGPT
-</h1>
+# Berend-Botje Skills
+>**Ed. de Feber**
+>**27-09-2023**
+>>E-Mail: [Ed. de Feber](mailto:ed.de.feber@outlook.com) 
+>>Website: [Berend-Botje](http://berendbotje.online)
+
+Berend-Botje Skills is een verzameling van Smart, op AI gebaseerde Apps, die tot doel hebben werkzaamheden van gebruikers makkelijker te maken. De apps zijn op gebaseerd op State of the Art AI modellen, waaronder die van OpenAi zoals VhatGPT, en inzichten uit de data ondersteuning.
 
 Accurate answers and instant citations for your documents.
 
@@ -9,32 +13,7 @@ Accurate answers and instant citations for your documents.
 - Upload documents 📁(PDF, DOCX, TXT) and answer questions about them.
 - Cite sources📚 for the answers, with excerpts from the text.
 
-## 💻 Running Locally
-
-1. Clone the repository📂
-
-```bash
-git clone https://github.com/mmz-001/knowledge_gpt
-cd knowledge_gpt
-```
-
-2. Install dependencies with [Poetry](https://python-poetry.org/) and activate virtual environment🔨
-
-```bash
-poetry install
-poetry shell
-```
-
 3. Run the Streamlit server🚀
-
-```bash
-cd knowledge_gpt
-streamlit run main.py
-```
 
 ## 🚀 Upcoming Features
 
-- Add support for more formats (e.g. webpages 🕸️, PPTX 📊, etc.)
-- Highlight relevant phrases in citations 🔦
-- Support scanned documents with OCR 📝
-- More customization options (e.g. chain type 🔗, chunk size📏, etc.)
