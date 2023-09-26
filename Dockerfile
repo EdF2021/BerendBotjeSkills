@@ -27,10 +27,10 @@ WORKDIR /app
 
 COPY --from=builder /app /app
 
-COPY /knowledge_gpt ./knowledge_gpt 
+COPY /Berend-Botje-Skills ./
 
 ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8501
 
-CMD ["python", "-m", "streamlit", "run", "knowledge_gpt/main.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["python", "-m", "streamlit", "run", "Berend-Botje-Skills.py", "--server.port=8501", "--server.address=0.0.0.0"]
