@@ -55,6 +55,7 @@ python-dotenv
 pytz-deprecation-shim
 pytz
 pyyaml
+openpyxl
 referencing
 regex
 requests
