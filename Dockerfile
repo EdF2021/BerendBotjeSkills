@@ -27,7 +27,7 @@ WORKDIR /app
 
 COPY --from=builder /app /app
 
-COPY / ./
+COPY /BerendBotjeSkills ./BerendBotjeSkills
 
 ENV PATH="/app/.venv/bin:$PATH"
 
