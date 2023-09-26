@@ -17,7 +17,6 @@ from streamlit.logger import get_logger
 import tiktoken
 import tiktoken_ext
 import openai
-# import openpyxl
 
 LOGGER = get_logger(__name__)
 
@@ -27,27 +26,28 @@ ENCODINGS = 'cl100k_base'
 
 def run():
     st.set_page_config(
-        page_title="Berend-Botje",
+        page_title="Berend-Botje Skills",
         page_icon="👋",
     )
 
-    st.write("# Welkom bij Berend-Botje Skills 👋")
+    st.write("## Welkom bij Berend-Botje Skills 👋")
 
     st.sidebar.success("Kies een van Berend's skills")
 
     st.markdown(
         """
-        ###### Berend-Botje is een slimme AI assistent met Skills die je kunnen helpen bij het uitvoeren van diverse taken.  Berend maakt hierbij gebruik van AI modellen van **openai** zoals ChatGPT, het verschil is dat alle kennis, informatie, en documentatie binnen de omgeving van de gebruiker blijft! 
-        
-        ##### 👈 Selecteer een van Berend's  Skills vanaf het actiemenu voor enkele voorbeelden van Berend-Botje!
-        
-        ### Meer weten?
+        ###### Berend-Botje is een slimme AI assistent die je kan helpen bij het uitvoeren van diverse werkzaamheden. Afhankelijk van de werkzaamheden gebruikt Berend hiervoor 1 of meer van zijn skills.  Deze skills maken gebruik van AI modellen van **openai** zoals ChatGPT.  Het verschil met ChatGPT is dat alle informatie binnen de omgeving van de gebruiker blijft! 
+        #### Voorbeelden
+        ##### 👈 Selecteer in de zijbalk een van de voorbeeldskills van Berend-Botje!
+        1. [De Lesplanner](Lesplan_Demo)
+        2. [De Notulist](Mapping_Demo)
+        2. [De Dataanalist](DataFrame_Demo)
+        3. [De Datavormgever](Plotting_Demo)
+        #### Meer weten?
+        - Ga naar ....
         - ....
-        - ....
-        - ....
-        ### Voor meer complexere demos
-        - ....
-        - ....
+        #### Het is werk under conder construction 
+        - Lees bijvoorbeeld 
     """
     )
 
