@@ -17,7 +17,7 @@ from streamlit.logger import get_logger
 import tiktoken
 import tiktoken_ext
 import openai
-import openpyxl
+# import openpyxl
 
 LOGGER = get_logger(__name__)
 
