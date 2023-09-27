@@ -1,5 +1,7 @@
 import os 
 import streamlit as st
+from PIL import Image
+
 from streamlit import sidebar
 from core import ui
 from ui import (
@@ -23,21 +25,27 @@ EMBEDDING = "openai"
 VECTOR_STORE = "faiss"
 MODEL_LIST = ["gpt-3.5-turbo", "gpt-4"]
 
-
+image = Image.open('images/producttoer.jpeg')
 # Uncomment to enable debug mode
 # MODEL_LIST.insert(0, "debug")
 
-st.set_page_config(page_title="Berend-Botje Skills", page_icon="📖", )
-st.header("📖Berend-Botje Skills" )
-st.subheader("- De Lesplanner - Waarom zou je moeilijk doen ....?")
 
-st.markdown("###### De Lesplanner ondersteunt docenten bij het maken van een lesplan.")
-st.markdown(
-            "###### Hoe werkt De Lesplanner?\n"
-            "1. Upload een pdf, docx, of txt file📄\n"
-            "2. Stel je vraag over het document 💬\n"
-            "3. Laat Berend je lesplan maken\n"
-        )
+st.set_page_config(page_title="Berend-Botje Skills", page_icon="📖" )
+col1, col2 = st.columns(2)
+
+with col1:
+    st.header("📖Berend-Botje Skills" )
+    st.subheader("De Lesplanner\n*waarom zou je moeilijk doen ....?*")
+with col2:
+   st.image(image, caption=None, width=240, use_column_width=None, clamp=True, channels="RGB", output_format="png")
+
+
+
+st.markdown("""##### De Lesplanner ondersteunt docenten bij het maken van een lesplan.
+###### Hoe werkt de Lesplanner? 
+  - **Upload een pdf, docx, of txt file📄**
+  - **Stel je vraag over het document 💬**
+  - **Laat Berend je lesplan maken**""" )
 
 
 # Enable caching for expensive functions
@@ -45,7 +53,7 @@ bootstrap_caching()
 
 # sidebar()
 
-sleutel = os.getenv("OPENAI_API_KEY")
+# sleutel = os.getenv("OPENAI_API_KEY")
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 st.session_state.get("OPENAI_API_KEY")
@@ -59,14 +67,14 @@ if not openai_api_key:
 
 
 uploaded_file = st.file_uploader(
-    "Upload een pdf, docx, or txt file",
+    "**UPLOAD HIER EEN PDF, DOCX, OF TXT BESTAND!",
     type=["pdf", "docx", "txt"],
     help="Gescande documenten worden nog niet ondersteund!",
 )
 
 model: str = st.selectbox("Model", options=MODEL_LIST)  # type: ignore
 
-with st.expander("Advanced Options"):
+with st.expander("Geavanceerd"):
     return_all_chunks = st.checkbox("Show all chunks retrieved from vector search")
     show_full_doc = st.checkbox("Show parsed contents of the document")
 
@@ -80,7 +88,8 @@ try:
 except Exception as e:
     display_file_read_error(e, file_name=uploaded_file.name)
 
-chunked_file = chunk_file(file, chunk_size=300, chunk_overlap=0)
+with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
+    chunked_file = chunk_file(file, chunk_size=300, chunk_overlap=0)
 
 if not is_file_valid(file):
     st.stop()
@@ -90,7 +99,7 @@ if not is_open_ai_key_valid(openai_api_key, model):
     st.stop()
 
 
-with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
+with st.spinner("Bezig met verwerken... ⏳"):
     folder_index = embed_files(
         files=[chunked_file],
         embedding=EMBEDDING if model != "debug" else "debug",
@@ -100,9 +109,9 @@ with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
 
 with st.form(key="qa_form"):
     query = st.text_area("Stel hier je vraag.")
+    query += "Antwoord in het Nederlands"
     submit = st.form_submit_button("Versturen")
     
-
 
 if show_full_doc:
     with st.expander("Document"):
@@ -116,23 +125,22 @@ if submit:
 
     # Output Columns
     answer_col, sources_col = st.columns(2)
-
-    llm = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
-    result = query_folder(
-        folder_index=folder_index,
-        query=query,
-        return_all=return_all_chunks,
-        llm=llm,
-    )
-
-    with answer_col:
-        st.markdown("#### Lesplan")
-        st.markdown("> by ['Berend-Botje Skills']('https://berend-botje.online')")
-        st.markdown(result.answer)
-
-    with sources_col:
-        st.markdown("#### Gebruikte bronnen")
-        for source in result.sources:
-            st.markdown(source.page_content)
-            st.markdown(source.metadata["source"])
-            st.markdown("---")
+    with st.spinner("Bezig ... ⏳"):
+        llm = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
+        result = query_folder(
+            folder_index=folder_index,
+            query=query,
+            return_all=return_all_chunks,
+            llm=llm,
+        )
+        with answer_col:
+            st.markdown("#### Het Lesplan")
+            st.markdown(">['Berend-Botje Skills']('https://berend-botje.online')")
+            st.markdown(result.answer)
+    
+        with sources_col:
+            st.markdown("#### Bronnen")
+            for source in result.sources:
+                st.markdown(source.page_content)
+                st.markdown(source.metadata["source"])
+                st.markdown("---")

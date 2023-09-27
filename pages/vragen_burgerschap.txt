@@ -1,0 +1,16 @@
+prompt = """Wat zijn de 8 Thema's? Geef voor alle 8 thema de 5 lessen die bij dit thema hoort. 
+Voorbeeld:
+- Titel van Thema 1:\n
+                   1. les 1 van Thema 1\n  
+                   2. les 2 van Thema 1\n
+                   3. les 3 van Thema 1\n
+                   4. les 4 van Thema 1\n
+                   5. les 5 van Thema 1\n
+- Titel van Thema 2:\n                                  
+                   1. les 1 van Thema 2\n 
+                   2. les 2 van Thema 2\n
+                   3. les 3 van Thema 2\n 
+                   4. les 4 van Thema 2\n
+                   5. les 5 van Thema 2\n
+En zo ook voor Thema 3, 4 en 5. 
+"""
