@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "hello"
+name = "BerendBotjeSkills"
 version = "0.0.5"
 description = "Accurate answers and instant citations for your documents"
 authors = ["edf<ed.de.feber@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "hello"}]
+packages = [{include = "BerendBotjeSkills"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
