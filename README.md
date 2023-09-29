@@ -6,14 +6,15 @@
 
 Berend-Botje Skills is een verzameling van Smart, op AI gebaseerde Apps, die tot doel hebben werkzaamheden van gebruikers makkelijker te maken. De apps zijn op gebaseerd op State of the Art AI modellen, waaronder die van OpenAi zoals VhatGPT, en inzichten uit de data ondersteuning.
 
-Accurate answers and instant citations for your documents.
+Hier worden enkele mogelijkheden getoond van Streamlit.
 
-## 🔧 Features
-
-- Upload documents 📁(PDF, DOCX, TXT) and answer questions about them.
-- Cite sources📚 for the answers, with excerpts from the text.
-
-3. Run the Streamlit server🚀
-
-## 🚀 Upcoming Features
-
+## 🔧 De Lesplanner
+#### 🚀 Doel: 
+Ondersteunen van docenten bij het plannen van een les.
+#### 🚀 Mogelijkheden 
+- Het Uploaden van documenten 📁(PDF, DOCX, TXT) die gebruikt worden bij het genereren van een lesplan
+- Bronnen vermelding📚 bij het lesplan met stukjes (excerpts) tekst uit het ingelezen document.
+#### 🚀 Output
+- Een Lesplan
+- Een printbare versie van het Lesplan
+     
