@@ -39,6 +39,7 @@ numexpr
 numpy
 openai
 openapi-schema-pydantic
+openpyxl
 packaging
 pandas
 pillow

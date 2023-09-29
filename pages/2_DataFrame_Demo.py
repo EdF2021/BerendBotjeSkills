@@ -11,15 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import sys
 from urllib.error import URLError
 
 import altair as alt
 import pandas as pd
-
+from PIL import Image
 import streamlit as st
 from streamlit.hello.utils import show_code
 import openpyxl
+
+image = Image.open('images/producttoer.jpeg')
 
 MIJNDATA = "pages/mbo2018-2022.xlsx"
 
@@ -31,47 +33,58 @@ def data_frame_demo():
         df = pd.read_excel(MIJNDATA)
         # df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
         # df=df.set_index("PROVINCIE")
-        return df.set_index("PROVINCIE")
+        return df.set_index("INSTELLINGSCODE")
 
     try:
         df = get_UN_data()
         # df = pd.read_excel(MIJNDATA)
         # lijstje = df.index.drop_duplicates
-        countries = st.multiselect("PROVINCIE", set(sorted(list(df.index))), ['Drenthe', 'Flevoland'])
+        # print(df.columns)
+
+
+        # print(df["INSTELLINGSNAAM"])
+
+
+
+        keuze = set(list(df["INSTELLINGSNAAM"]))
+        keuze = sorted(keuze)
+
+
+        countries = st.multiselect("INSTELLINGSNAAM", keuze, [])
+        
+
         
         if not countries:
-            st.error("Selecteer een provincie")
+            st.error("Selecteer een Instelling")
         else:
-            data = df.loc[countries]
-            # data /= 1000000.0
-            st.write("### Studenten per provincie ($B)", data.sort_index())
-
-            data = data.T.reset_index()
-            data = pd.melt(data, id_vars=["index"]).rename(
-                columns={"index": "PEILJAAR", "value": "Het peiljaar ($B)"}
-            )
+            # print("GEKOZEN")
+            # print(countries[0])
+            countries = countries[0]
+            
+            data = df[df["INSTELLINGSNAAM"] == countries]
+            st.write("### Studenten per Instelling ($B)", data.sort_values(by="INSTELLINGSNAAM"))
+            # data = data.T.reset_index()
+            # st.bar_chart(data=data, x=["INSTELLINGSNAAM"], y=["TOTAAL"],use_container_width=True)
+            
             chart = (
                 alt.Chart(data)
                 .mark_area(opacity=0.3)
                 .encode(
-                    x="year:T",
-                    y=alt.Y("Het peiljaar ($B):Q", stack=None),
-                    color="Region:N",
+                    x="PEILJAAR",
+                    y=alt.Y("TOTAAL", stack=None),
+                    color="INSTELLINGSNAAM:N",
                 )
             )
             st.altair_chart(chart, use_container_width=True)
-    except URLError as e:
-        st.error(
-            """
-            **This demo requires internet access.**
-            Connection error: %s
-        """
-            % e.reason
-        )
+            
 
+    except URLError as e:
+        st.error( "**This demo requires internet access.** Connection error: %s, % e.reason")
 
 st.set_page_config(page_title="DataFrame Demo", page_icon="📊")
 st.markdown("# DataFrame Demo")
+st.image(image, caption=None, width=140, use_column_width=None, clamp=True, channels="RGB", output_format="png")
+
 st.sidebar.header("DataFrame Demo")
 st.write(
     """Hier laat Berend zien hoe excel bestanden in een DataFrame worden geplaatst."""
