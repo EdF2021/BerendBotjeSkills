@@ -10,9 +10,11 @@ Hier worden enkele mogelijkheden getoond van Streamlit.
 
 ## 🔧 De Lesplanner
 #### 🚀 Doel: 
-Ondersteunen van docenten bij het plannen van een les.
+- Ondersteunen van docenten bij het plannen van een les.
 #### 🚀 Mogelijkheden 
 - Het Uploaden van documenten 📁(PDF, DOCX, TXT) die gebruikt worden bij het genereren van een lesplan
+- Het stellen van vragen over de ingelezen documenten
+- Het maken van het lesplan op basis van de wensen van de docent
 - Bronnen vermelding📚 bij het lesplan met stukjes (excerpts) tekst uit het ingelezen document.
 #### 🚀 Output
 - Een Lesplan
