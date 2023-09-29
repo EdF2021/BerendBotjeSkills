@@ -12,9 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import streamlit as st
 from PIL import Image
 
+import openai
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+image = Image.open('images/producttoer.jpeg')
+
+from streamlit.logger import get_logger
+# import tiktoken
+# import tiktoken_ext
 image = Image.open('images/producttoer.jpeg')
 
 
@@ -22,6 +31,7 @@ from streamlit.logger import get_logger
 # import tiktoken
 # import tiktoken_ext
 # import openai
+# >>>>>>> c73e3ec134906f799647debf55cab1a1a04ad895
 
 LOGGER = get_logger(__name__)
 

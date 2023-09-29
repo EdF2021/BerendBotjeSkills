@@ -48,8 +48,7 @@ def data_frame_demo():
             # print("GEKOZEN")
             # print(countries[0])
             countries = countries # {{$B}}
-            
-            print(df[df["INSTELLINGSNAAM"] in [countries]])
+            print(df[df["INSTELLINGSNAAM"] in countries])
             st.stop()
 
             data = df[df["INSTELLINGSNAAM"] in countries]

@@ -1,7 +1,7 @@
 import os 
 import streamlit as st
 from PIL import Image
-
+import pandas as pd
 from streamlit import sidebar
 from core import ui
 from ui import (
@@ -19,7 +19,7 @@ from core.embedding import embed_files
 from core.utils import get_llm
 from core.qa import query_folder
 import tiktoken
-
+from pages.themas import prompt  
 
 EMBEDDING = "openai"
 VECTOR_STORE = "faiss"
@@ -42,7 +42,7 @@ with col1:
     st.header("📖Berend-Botje Skills" )
     st.subheader("De Lesplanner\n*waarom zou je moeilijk doen ....?*")
 with col2:
-   st.image(image, caption=None, width=240, use_column_width=None, clamp=True, channels="RGB", output_format="png")
+   st.image(image, caption=None, width=240, use_column_width=True, clamp=True, channels="RGB", output_format="png")
 
 
 
@@ -111,6 +111,53 @@ with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
             vector_store=VECTOR_STORE if model != "debug" else "debug",
             openai_api_key=openai_api_key,
         )
+    
+    
+
+    llm = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
+    result = query_folder(
+            folder_index=folder_index,
+            query=prompt,
+            return_all=return_all_chunks,
+            llm=llm,
+        )
+    comlijstje = result.answer.split("Thema")
+    comlijstje = comlijstje[1:]
+    i=0
+    # for i in range(0:len(comlijstje)):
+    #        comlijstje[i] = comlijstje[i].replace("-","").replace("\\n","")
+    #        print(comlijstje[i])
+    #        i++
+
+
+    df = pd.DataFrame(
+        [
+            {"command": "st.selectbox", "Thema": comlijstje[0], "is_widget": True},
+            {"command": "st.balloons", "Thema": comlijstje[1], "is_widget": False},
+            {"command": "st.time_input", "Thema": comlijstje[2], "is_widget": True},
+        ]
+    )   
+    edited_df = st.data_editor(
+            df,
+            column_config={
+                "command": "Streamlit Command",
+                "rating": st.column_config.NumberColumn(
+                    "Your rating",
+                    help="How much do you like this command (1-5)?",
+                    min_value=1,
+                    max_value=5,
+                    step=1,
+                    format="%d ⭐",
+                    ),
+                "is_widget": "Widget ?",
+            },
+            disabled=["command", "is_widget"],
+            hide_index=True,
+    )
+
+    # favorite_command = edited_df.loc[edited_df["rating"].idxmax()]["command"]
+    st.markdown(f"Dit zijn de Thema's **{comlijstje}** 🎈")
+
 
 with st.form(key="qa_form"):
     query = st.text_area("Stel hier je vraag.")
