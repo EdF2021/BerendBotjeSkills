@@ -29,7 +29,6 @@ def data_frame_demo():
     @st.cache_data
     def get_UN_data():
         MIJNDATA = "pages/mbo2018-2022.xlsx"
-        AWS_BUCKET_URL = "https://streamlit-demo-data.s3-us-west-2.amazonaws.com"
         df = pd.read_excel(MIJNDATA)
         # df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
         # df=df.set_index("PROVINCIE")
@@ -39,21 +38,12 @@ def data_frame_demo():
         df = get_UN_data()
         # df = pd.read_excel(MIJNDATA)
         # lijstje = df.index.drop_duplicates
-        # print(df.columns)
-
-
+        # print(df)
         # print(df["INSTELLINGSNAAM"])
-
-
-
         keuze = set(list(df["INSTELLINGSNAAM"]))
         keuze = sorted(keuze)
-
-
         countries = st.multiselect("INSTELLINGSNAAM", keuze, [])
-        
-
-        
+   
         if not countries:
             st.error("Selecteer een Instelling")
         else:
@@ -63,6 +53,8 @@ def data_frame_demo():
             
             data = df[df["INSTELLINGSNAAM"] == countries]
             st.write("### Studenten per Instelling ($B)", data.sort_values(by="INSTELLINGSNAAM"))
+            countries = countries #{$B}
+           
             # data = data.T.reset_index()
             # st.bar_chart(data=data, x=["INSTELLINGSNAAM"], y=["TOTAAL"],use_container_width=True)
             
@@ -70,8 +62,8 @@ def data_frame_demo():
                 alt.Chart(data)
                 .mark_area(opacity=0.3)
                 .encode(
-                    x="PEILJAAR",
-                    y=alt.Y("TOTAAL", stack=None),
+                    x="INSTELLINGSNAAM",
+                    y=["PEILJAAR", "TOTAAL"], 
                     color="INSTELLINGSNAAM:N",
                 )
             )
