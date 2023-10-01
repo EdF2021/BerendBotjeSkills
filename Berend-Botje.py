@@ -17,7 +17,7 @@ import streamlit as st
 from PIL import Image
 
 import openai
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 image = Image.open('images/producttoer.jpeg')
 
