@@ -112,33 +112,24 @@ with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
             embedding=EMBEDDING if model != "debug" else "debug",
             vector_store=VECTOR_STORE if model != "debug" else "debug",
             openai_api_key=openai_api_key,
-
         )
-    if uploaded_file:
-        llm2 = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
-        result = query_folder(
+
+
+if uploaded_file:
+    llm = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
+    result = query_folder(
         folder_index=folder_index,
-            query="Maak een samenvatting van het document dat net is ingelezen. Geef de hoofd thema's aan en bendadruk de belangrijkste onderwerpen. Maak gebruik van het markdown formaat en gebruik hier 5 regels voor. Geef altijd antwoord in HET NEDERLANDS!!",
-            return_all=return_all_chunks,
-            llm=llm2,
-            )
-        st.markdown(" ### Samenvatting")
-        st.markdown(result.answer)
-
-
-
-
-
-
-# st.button("Onderwerp", key="Onderwerp")
-# st.button("Lesdoel", key="Lesdoel")
+        query="Maak een samenvatting van het document dat net is ingelezen met de hoofd thema's en belangrijkste onderwerpen. Gebruik hier maximaal 3 regels voor. Geef altijd antwoord in HET NEDERLANDS!!",
+        return_all=return_all_chunks,
+        llm=llm,)
+    st.markdown("#### Samenvatting beschikbaar materiaal lesplan")
+    st.markdown(result.answer)
 
 
 with st.form(key="qa_form"):
-    onderwerp = st.text_input("**Maak een lesplan over het onderwerp** ", "Onderwerp ") 
-    lesdoel = st.text_input("**Het lesdoel van de studenten**", " Het doel ")
-    query = "Maak een lesplan over " + str(onderwerp) + " Het doel van de les is dat studenten " + str(lesdoel) + """. Maak gebruik van het ingelezen document, en antwoord in het Nederlands. Gebruik een helder leerdoel,want dat is wat de studenten na de les moeten begrijpen en/of kunnen doen. Maak het lesplan in markdown formaat met een verscheidenheid aan lestechnieken en -modaliteiten, waaronder directe instructie, controleren op begrip(inclusief het verzamelen van bewijs van begrip van een brede steekproef van studenten), discussie, een boeiende activiteit in de klas en een opdracht. Leg uit waarom je specifiek voor elk kiest. Probeer het niet groter te maken dan 2  A4-tjes.GEEF ANTWOORD IN HET NEDERLANDS! """    
-    submit = st.form_submit_button("Sturen")
+    query = st.text_area("**Ik wil een lesplan over het {{Onderwerp}}. De bedoeling is dat de studenten na de les {{Lesdoel}}.**")
+    query += "Antwoord in het Nederlands"
+    submit = st.form_submit_button("Stel je vraag")
     
 
 # if show_full_doc:
@@ -154,14 +145,13 @@ if submit:
 
         # Output Columns
 
-        print(query),
         llm = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
         result = query_folder(
-                folder_index=folder_index,
-                query = query,
-                return_all=return_all_chunks,
-                llm=llm
-                )
+            folder_index=folder_index,
+            query=query,
+            return_all=return_all_chunks,
+            llm=llm,
+        )
         # answer_col, sources_col = st.columns(2)
         
         # with answer_col:

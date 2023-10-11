@@ -31,6 +31,9 @@ def data_frame_demo():
         MIJNDATA = "pages/mbo2018-2022.xlsx"
         # AWS_BUCKET_URL = "https://streamlit-demo-data.s3-us-west-2.amazonaws.com"
         df = pd.read_excel(MIJNDATA)
+        print(df.head())
+
+
         # df = pd.read_csv(AWS_BUCKET_URL + "/agri.csv.gz")
         # df=df.set_index("PROVINCIE")
         return df.set_index("INSTELLINGSCODE")
@@ -47,22 +50,32 @@ def data_frame_demo():
         else:
             # print("GEKOZEN")
             # print(countries[0])
-            countries = countries # {{$B}}
+            # countries = countries # {{$B}}
             
-            print(df[df["INSTELLINGSNAAM"] in [countries]])
-            st.stop()
+            # print(df[df["INSTELLINGSNAAM"].isin(countries)]) 
+            
+            # print(df[df["INSTELLINGSNAAM" == c] for c in countries])
 
-            data = df[df["INSTELLINGSNAAM"] in countries]
-            st.write("### Studenten per Instelling}", data.sort_values(by="INSTELLINGSNAAM"))
+            # st.stop()
+
+            # data = df[df["INSTELLINGSNAAM"] in countries]
+            data = df[df["INSTELLINGSNAAM"].isin(countries)]
+            data = data[["INSTELLINGSNAAM","GEMEENTENAAM", "PEILJAAR", "TOTAAL"]]
+            # print(data)
+            data = data.astype({"PEILJAAR": int})
+            # print(data)
+
+            st.write("### Studenten per Instelling", data.sort_values(by="INSTELLINGSNAAM"))
             # data = data.T.reset_index()
-            # st.bar_chart(data=data, x=["INSTELLINGSNAAM"], y=["TOTAAL"],use_container_width=True)
             
+            ## st.bar_chart(data=data, x=["PEILJAAR"], y=["TOTAAL"],use_container_width=True)
+            st.stop()
             chart = (
                 alt.Chart(data)
                 .mark_area(opacity=0.3)
                 .encode(
-                    x="INSTELLINGSNAAM",
-                    y=["PEILJAAR", "TOTAAL"], 
+                    x="PEILJAAR",
+                    y=["TOTAAL"], 
                     color="INSTELLINGSNAAM:N",
                 )
             )
