@@ -1,0 +1,11 @@
+# Wat settings
+
+
+STREAMLIT_SERVER_BASE_URL_PATH="/app"
+
+# import  app.app
+
+print(app.name)
+
+
+
