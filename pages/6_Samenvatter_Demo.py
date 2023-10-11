@@ -40,18 +40,18 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.header("Berend-Botje Skills" )
-    st.subheader("De Lesplanner\n*waarom zou je moeilijk doen ....?*")
+    st.subheader(":-) De Samenvatter\n*waarom zou je moeilijk doen ....?*")
 with col2:
    st.image(image, caption=None, use_column_width=True, clamp=True, channels="RGB", output_format="png")
 
 
 with st.sidebar:
-    st.markdown("""#### De Lesplanner ondersteunt docenten bij het maken van een lesplan.""")
+    st.markdown("""#### De Samenvatter kan diverse omvangrijke documenten voor u samenvatten. """)
     st.markdown("""
-    #### Hoe werkt de Lesplanner? 
+    #### Hoe werkt de Samenvatter? 
     1. **Upload een pdf, docx, of txt file📄**
-    2. **Stel je vraag over het document 💬**
-    3. **Laat Berend je lesplan maken**
+    2. **Vraag of Berend een samenvatting voor je wilt maken.  💬**
+    3. **En Berend gaat aan de slag**
     """ )
 
 
@@ -118,11 +118,27 @@ with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
         llm2 = get_llm(model=model, openai_api_key=openai_api_key, temperature=0)
         result = query_folder(
         folder_index=folder_index,
-            query="Maak een samenvatting van het document dat net is ingelezen. Geef de hoofd thema's aan en bendadruk de belangrijkste onderwerpen. Maak gebruik van het markdown formaat en gebruik hier 5 regels voor. Geef altijd antwoord in HET NEDERLANDS!!",
-            return_all=return_all_chunks,
+        query="""Maak een mooie en inhoudelijk juiste samenvatting van het document dat net is ingelezen. De samenvatting moet alle  belangrijke thema's bevatten die in het document worden genoemd. Gebruik onderstaand format coor de samenvatting.\n 
+    < Voorbeeld >
+        ## Samenvatting van {{Naam van het document}}
+        
+        ### {{Hier geef je de auteur}} en {{datum van vandaag}}.
+        
+        ## Waar gaat het over?
+        
+        Een globale beschrijving  over de inhoud van het document. Wat het onderwerp is, of het doel is, voor wie het geschreven is, en wat de conclusies zijn.
+        
+        ## Belangrijkste thema's
+
+        Hier puntsgewijs de thema's of onderwerpen samenvatten.
+    < Einde Voorbeeld >
+
+        Gebruik koppen en subkoppen om meer overzicht te krijgen en om de belangrijke thema's te benadrukken. Toon de samenvatting in markdown formaat. En geef altijd antwoord in HET NEDERLANDS!!""",
+            
+        return_all=return_all_chunks,
             llm=llm2,
             )
-        st.markdown(" ### Samenvatting")
+        st.markdown("+++  Samenvatting  +++ ")
         st.markdown(result.answer)
 
 
@@ -135,9 +151,9 @@ with st.spinner("Indexeren van het document... Dit kan even duren⏳"):
 
 
 with st.form(key="qa_form"):
-    onderwerp = st.text_input("**Maak een lesplan over het onderwerp** ", "Onderwerp ") 
-    lesdoel = st.text_input("**Het lesdoel van de studenten**", " Het doel ")
-    query = "Maak een lesplan over " + str(onderwerp) + " Het doel van de les is dat studenten " + str(lesdoel) + """. Maak gebruik van het ingelezen document, en antwoord in het Nederlands. Gebruik een helder leerdoel,want dat is wat de studenten na de les moeten begrijpen en/of kunnen doen. Maak het lesplan in markdown formaat met een verscheidenheid aan lestechnieken en -modaliteiten, waaronder directe instructie, controleren op begrip(inclusief het verzamelen van bewijs van begrip van een brede steekproef van studenten), discussie, een boeiende activiteit in de klas en een opdracht. Leg uit waarom je specifiek voor elk kiest. Probeer het niet groter te maken dan 2  A4-tjes.GEEF ANTWOORD IN HET NEDERLANDS! """    
+    query = """ Maak een samenvatting van het ingelezen document.  Gebruik een helder en overtuigende stijl.Gebruik het markdown formaat. Probeer de samenvatting niet groter te maken dan 2A4-tjes.GEEF ANTWOORD IN HET NEDERLANDS!"""    
+    query += st.text_input("**Maak een samenvatting") 
+    
     submit = st.form_submit_button("Sturen")
     
 
@@ -165,7 +181,7 @@ if submit:
         # answer_col, sources_col = st.columns(2)
         
         # with answer_col:
-        st.markdown("#### Het Lesplan\n['Berend-Botje Skills']('https://berend-botje.online')")
+        st.markdown("#### Samenvatting \n['Berend-Botje Skills']('https://berend-botje.online')")
         st.markdown(result.answer)
     
         # with sources_col:
