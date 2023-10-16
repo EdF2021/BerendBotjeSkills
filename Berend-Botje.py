@@ -67,7 +67,7 @@ def run():
         **4. [De Datavormgever](Plotting_Demo)**
         **5. [De Chatbot](Chat_Demo)**
         **6. [De Samenvatter](Samenvatter_Demo)**
-        **9. [Berend Broodjes](Berend_Broodjes_Demo)**
+        **9. [Berend Broodjes](Broodje_Berend_Demo)**
         """
                    )
     
