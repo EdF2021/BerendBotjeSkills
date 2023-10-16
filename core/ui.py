@@ -1,3 +1,4 @@
+import os
 from typing import List
 import streamlit as st
 from langchain.docstore.document import Document
@@ -8,7 +9,7 @@ from typing import NoReturn
 
 logger = get_logger(__name__)
 
-
+openai_api_key = os.getenv("OPENAI_API_KEY")
 def wrap_doc_in_html(docs: List[Document]) -> str:
     """Wraps each page in document separated by newlines in <p> tags"""
     text = [doc.page_content for doc in docs]
