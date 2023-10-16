@@ -16,10 +16,10 @@ import os
 import streamlit as st
 from PIL import Image
 from streamlit.logger import get_logger
+import openai
 
 LOGGER = get_logger(__name__)
 
-import openai
 
 try: 
     openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -33,7 +33,7 @@ ENCODINGS = 'cl100k_base'
 def run():
     st.set_page_config(
             page_title=":genie:Berend-Botje Skills",
-            page_icon="👋",
+            page_icon=" :genie:👋",
             layout="wide",
             initial_sidebar_state="collapsed",
             menu_items={
@@ -52,35 +52,29 @@ def run():
         ###### Berend-Botje Basis:male_mage:, een soort van ChatGPT kloon, staat altijd voor je klaar om snel je vragen te beantwoorden. Heb je behoefte aan hulp bij een specifieke taak, dan vraag je Berend om de bijpassende Skills voor je in te pluggen. 
         **Jij kiest dus op basis van je klus de bijpassende Berend Bot.**  
         :rotating_light: Belangrijk voordeel van het gebruik van Berend-Botje is dat al jouw informatie binnen jouw omgeving blijft!  *Nadat een sessie wordt afgesloren blijft er dus geen informatie achter die door ons noch door derden gebruikt kan worden!*
-        >> De skills zijn **Powered By OpenAI models**.
         ------------------------------------
+        >> De skills zijn **Powered By OpenAI models**
         """ 
         )
 
     with col2:
         st.image(image, caption=None, use_column_width=True, clamp=True, channels="RGB", output_format="auto")
-    
-    # st.sidebar.success("Kies één van Berend's skills")
-    st.markdown(""" ##### Voorbeelden
-    **1. [De Lesplanner](Lesplan_Demo)**
-    **2. [De Notulist](Mapping_Demo)**
-    **3. [De Dataanalist](DataFrame_Demo)**
-    **4. [De Datavormgever](Plotting_Demo)**
-    **5. [De Chatbot](Chat_Demo)**
-    **6. [De Samenvatter](Samenvatter_Demo)**
-    """
-    )
+        st.markdown(""" 
+        ##### Voorbeelden
+        **1. [De Lesplanner](Lesplan_Demo)**
+        **2. [De Notulist](Mapping_Demo)**
+        **3. [De Dataanalist](DataFrame_Demo)**
+        **4. [De Datavormgever](Plotting_Demo)**
+        **5. [De Chatbot](Chat_Demo)**
+        **6. [De Samenvatter](Samenvatter_Demo)**
+        **9. [Berend Broodjes](Berend_Broodjes_Demo)**
+        """
+                   )
     
     st.markdown("""
     :angel: :gray[ *Disclaimer Aan het gebruik, of resulaten van Berend-Botje Skills kunnen geen rechten worden verleend. Noch zijn wij aansprakelijk voor enig gevolg van dit gebruik. Bedenk dat de voorbeelden die hier getoond worden nog in een premature fase verkeren: het is werk onder constructie...* ]
     """
     )
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
