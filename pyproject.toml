@@ -1,16 +1,16 @@
 [tool.poetry]
-name = "BerendBotjeSkills"
+name = "berend_app"
 version = "0.0.5"
 description = "Accurate answers and instant citations for your documents"
-authors = ["edf<ed.de.feber@gmail.com>"]
+authors = ["EdF2001 <ed.de.feber@outlook.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "BerendBotjeSkills"}]
+packages = [{include = "berend_app"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 streamlit = "^1.24.0"
-langchain = "^0.0.308"
+langchain = "^0.0.220"
 cohere = "^3.2.1"
 faiss-cpu = "^1.7.3"
 openai = "^0.27.8"

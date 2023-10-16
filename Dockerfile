@@ -7,7 +7,7 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_VERSION=1.5.1 \
     PIP_NO_CACHE_DIR=1
 
-WORKDIR /app
+WORKDIR /BerendBotjeSkills
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -23,13 +23,13 @@ RUN  poetry install --no-interaction --no-ansi --no-root --without dev,lint,extr
 
 FROM python:3.10-slim
 
-WORKDIR /app
+WORKDIR /BerendBotjeSkills
 
-COPY --from=builder /app /app
+COPY --from=builder /BerendBotjeSkills /BerendBotjeSkills
 
 COPY /BerendBotjeSkills ./BerendBotjeSkills
 
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="/BerendBotjeSkills/.venv/bin:$PATH"
 
 EXPOSE 8501
 
